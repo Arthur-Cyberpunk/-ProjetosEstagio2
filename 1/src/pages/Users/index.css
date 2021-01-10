@@ -1,0 +1,9 @@
+.bt {
+    margin: 25px 10px 10px 0px;
+    display: inline-block;
+    justify-content: space-between
+}
+
+.b {
+    margin-right: 10px;
+}
