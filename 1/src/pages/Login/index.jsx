@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import StoreContext from "../../components/Store/Context";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import "./index.css";
 
@@ -14,11 +14,11 @@ const Login = () => {
     event.preventDefault();
     const response = await api.post("/autenticacao", {
       usuario: username,
-      senha: password
+      senha: password,
     });
     setToken(response.data.token);
-      history.push("/users");
-}
+    history.push("/users");
+  }
 
   return (
     <div className="user-login">
