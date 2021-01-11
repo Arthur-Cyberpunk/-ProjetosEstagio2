@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Button, Col, Form } from 'react-bootstrap';
 import api from "../../services/api";
 
 function Register() {
@@ -18,7 +19,7 @@ function Register() {
     sexo: "",
     dataNascimento: "",
     idade: "",
-    perfilTipo: "",
+    perfilId: "",
   };
 
   const [values, setValues] = useState(camposCadastro);
@@ -40,17 +41,7 @@ function Register() {
 
   async function editUser(id) {
     const response = await api.get(`/usuarios/${id}`);
-    setValues({
-      nome: response.data.nome,
-      usuario: response.data.usuario,
-      email: response.data.email,
-      senha: response.data.senha,
-      telefone: response.data.telefone,
-      sexo: response.data.sexo,
-      dataNascimento: response.data.dataNascimento,
-      idade: response.data.idade,
-      perfilTipo: response.data.perfilTipo,
-    });
+    setValues(response.data)
   }
 
   async function onSubmit(event) {
@@ -74,97 +65,132 @@ function Register() {
   }
 
   return (
-    <div className="container">
-      <form onSubmit={onSubmit}>
-        <button type="button" className="btn btn-success" onClick={backUsers}>
-          Voltar
-        </button>
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Nome"
-          aria-label="default input example"
+    <Form
+    onSubmit={onSubmit}
+    className="container form-new"
+  >
+    <Button block variant="primary" type="button" onClick={backUsers}>
+      Voltar
+    </Button>
+    
+    <Form.Row >
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Nome</Form.Label>
+        <Form.Control
           name="nome"
           value={values.nome}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
+          onChange={(e)=>inputChange(e)}
           type="text"
-          placeholder="Usuário"
-          aria-label="default input example"
-          name="usuario"
-          value={values.usuario}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
-          type="email"
-          placeholder="Email"
-          aria-label="default input example"
+          placeholder="digite seu nome completo"
+        />
+      </Form.Group>
+  
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Email</Form.Label>
+        <Form.Control
           name="email"
           value={values.email}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
-          type="password"
-          placeholder="Senha"
-          aria-label="default input example"
-          name="senha"
-          value={values.senha}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
-          type="int"
-          placeholder="Telefone"
-          aria-label="default input example"
+          onChange={(e)=>inputChange(e)}
+          type="email"
+          placeholder="seu@email.com"
+        />
+      </Form.Group>
+  
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Telefone</Form.Label>
+        <Form.Control
           name="telefone"
           value={values.telefone}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
+          onChange={(e)=>inputChange(e)}
+          type="number"
+          placeholder="+55"
+  
+        />
+      </Form.Group>
+    </Form.Row>
+  
+    <Form.Row >
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Usuário</Form.Label>
+        <Form.Control
+          name="usuario"
+          value={values.usuario}
+          onChange={(e)=>inputChange(e)}
           type="text"
-          placeholder="Sexo"
-          aria-label="default input example"
-          name="sexo"
-          value={values.sexo}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
-          type="date"
-          placeholder="Data de nacimento"
-          aria-label="default input example"
+          placeholder="digite seu nome de usuário"
+  
+        />
+      </Form.Group>
+  
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Senha</Form.Label>
+        <Form.Control
+          name="senha"
+          value={values.senha}
+          onChange={(e)=>inputChange(e)}
+          type="password"
+          placeholder="************"
+        />
+      </Form.Group>
+  
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Data de nascimento</Form.Label>
+        <Form.Control
           name="dataNascimento"
           value={values.dataNascimento}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
-          type="int"
-          placeholder="Idade"
-          aria-label="default input example"
+          onChange={(e)=>inputChange(e)}
+          type="text" 
+          placeholder="01-01-0001"
+        />
+      </Form.Group>
+  
+      <Form.Group as={Col}>
+        <Form.Label className="form-label">Idade</Form.Label>
+        <Form.Control
           name="idade"
           value={values.idade}
-          onChange={inputChange}
-        ></input>
-        <input
-          className="form-control"
-          type="int"
-          placeholder="perfilTipo"
-          aria-label="default input example"
-          name="perfilTipo"
-          value={values.perfilTipo}
-          onChange={inputChange}
-        ></input>
-        <button type="submit" className="btn btn-success">
-          Salvar
-        </button>
-      </form>
-    </div>
+          onChange={(e)=>inputChange(e)}
+          type="number" 
+        />
+      </Form.Group>
+    </Form.Row>
+  
+  
+    <Form.Row >
+      <Form.Group as={Col} >
+        <Form.Label>Sexo</Form.Label>
+        <Form.Control
+          as="select" 
+          name="sexo"
+          value={values.sexo}
+          onChange={(e)=>inputChange(e)}
+          type="text"
+        >
+          <option>MASCULINO</option>
+          <option>FEMININO</option>
+        </Form.Control>
+        
+      </Form.Group>
+  
+      <Form.Group as={Col} >
+        <Form.Label>Perfil</Form.Label>
+        <Form.Control
+          name="perfilId"
+          value={values.perfilId}
+          onChange={(e)=>inputChange(e)} 
+          type="text"
+        >
+          {/* <option>Choose...</option> */}
+          
+          {/* <option>Aluno</option> */}
+        </Form.Control>
+      </Form.Group>
+    </Form.Row>
+  
+    <Button block variant="primary" type="submit">
+      Submit
+    </Button>
+  </Form>
   );
 }
 
