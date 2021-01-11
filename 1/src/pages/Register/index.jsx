@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import api from "../../services/api";
 
@@ -8,17 +8,17 @@ function Register() {
   function backUsers() {
     history.push("/users");
   }
-  
+
   const camposCadastro = {
     nome: "",
     usuario: "",
     email: "",
     senha: "",
-    telefone: 0,
+    telefone: "",
     sexo: "",
     dataNascimento: "",
-    idade: 0,
-    perfilTipo: 1,
+    idade: "",
+    perfilTipo: "",
   };
 
   const [values, setValues] = useState(camposCadastro);
@@ -55,25 +55,22 @@ function Register() {
 
   async function onSubmit(event) {
     event.preventDefault();
-    var token = localStorage.getItem('token')
-    console.log(token)
+    var token = localStorage.getItem("token");
 
     token = token.replace('"', "");
     token = token.replace('"', "");
-    console.log(token)
-    
+
     const config = {
-      headers: { Authorization: `Bearer ${token}` }
-  };
-    //if (id !== undefined) {
-      //await api.put(`/usuarios/${id}`, values, config);
-      //history.push("/users");
-    //} else {
-      console.log(values)
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    if (id !== undefined) {
+      await api.put(`/usuarios/${id}`, values, config);
+      history.push("/users");
+    } else {
+      console.log(values);
       await api.post("/usuarios", values, config);
       history.push("/users");
-    //}
-    
+    }
   }
 
   return (

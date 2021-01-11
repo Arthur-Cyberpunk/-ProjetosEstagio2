@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import { useHistory } from 'react-router-dom';
 import api from "../../services/api";
 import "./index.css";
+// import moment from 'moment';
 
 const Users = () => {
   const history = useHistory();
@@ -15,6 +16,14 @@ const Users = () => {
     const response = await api.get("/usuarios");
     setUser(response.data.content);
   }
+
+  useEffect(() => {
+    loadUsers()
+  }, [])
+
+  //function formateDate(dataNascimento) {
+    //return moment(dataNascimento).format("DD-MM-YYYY")
+  //}
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -38,6 +47,7 @@ const Users = () => {
       headers: { Authorization: `Bearer ${token}` }
     };
     await api.delete(`/usuarios/${id}`, config);
+    loadUsers()
   }
 
   return (
@@ -67,6 +77,7 @@ const Users = () => {
               <td>{users.usuario}</td>
               <td>{users.telefone}</td>
               <td>{users.dataNascimento}</td>
+              {/* <td>{formateDate(users.dataNascimento)}</td> */}
               <td>{users.email}</td>
               <td>{users.perfilTipo}</td>
               <td>
